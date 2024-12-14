@@ -13,7 +13,6 @@ class AuthLayout extends StatelessWidget {
 
     return Scaffold(
       body: Scrollbar(
-        thumbVisibility: true,
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
@@ -46,7 +45,7 @@ class _MobileBody extends StatelessWidget {
           const CustomTitle(),
           SizedBox(
             width: double.infinity,
-            height: 420,
+            height: 480,
             child: child,
           ),
           const SizedBox(
