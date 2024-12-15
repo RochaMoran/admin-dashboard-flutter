@@ -22,7 +22,9 @@ class Sidebar extends StatelessWidget {
               text: 'Dashboard',
               icon: Icons.compass_calibration_outlined,
               isActive: false,
-              onPressed: () => {}
+              onPressed: () => {
+                print('Dashboard')
+              }
           ),
           MenuItem(
               text: 'Orders',
