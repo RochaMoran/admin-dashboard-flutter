@@ -1,4 +1,3 @@
-import 'package:admin_dashboard/ui/cards/white_card.dart';
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +9,7 @@ class BlankView extends StatelessWidget {
     return ListView(
       physics: const ClampingScrollPhysics(),
       children: [
-        Text("Dashboard View", style: CustomLabels.h1),
-        const SizedBox(height: 10),
-        const WhiteCard(
-          title: "Estadisticas",
-          child: Text("Hola Mundo")
-        )
+        Text("Blank View", style: CustomLabels.h1)
       ],
     );
   }
