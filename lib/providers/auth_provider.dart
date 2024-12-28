@@ -4,6 +4,7 @@ import 'package:admin_dashboard/models/http/auth_response.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:admin_dashboard/services/navigation_service.dart';
+import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:flutter/material.dart';
 
 enum AuthStatus {
@@ -48,8 +49,7 @@ class AuthProvider extends ChangeNotifier {
           NavigationService.replaceTo(Flurorouter.dashboardRoute);
           notifyListeners();
         }).catchError((e) {
-          print('Error en $e');
-          //TODO: mostrar notificacion de error
+          NotificationsService.showSnackbarError('Hay un error en el registro. Posiblemente ya existe un usuario con ese correo.');
       });
   }
 
