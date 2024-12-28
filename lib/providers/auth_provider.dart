@@ -24,12 +24,23 @@ class AuthProvider extends ChangeNotifier {
 
   login(String email, String password) {
     // TODO: request http
-    _token  = 'fdsahfsdajfsdalkfjsalkfjsdalkfsdjlkfds';
-    LocalStorage.prefs.setString('token', _token!);
+    final data = {
+      'correo': email,
+      'password': password
+    };
+
+    CafeApi.httpPost('/auth/login', data).then((json) {
+      final authResponse = AuthResponse.fromMap(json);
+      user = authResponse.usuario;
+      LocalStorage.prefs.setString('token', authResponse.token);
+      authStatus = AuthStatus.authenticated;
+      NavigationService.replaceTo(Flurorouter.dashboardRoute);
+      CafeApi.configureDio();
+      notifyListeners();
+    }).catchError((e) {
+      NotificationsService.showSnackbarError('Usuario/Contraseña no válidos');
+    });
    
-    authStatus = AuthStatus.authenticated;
-    NavigationService.replaceTo(Flurorouter.dashboardRoute);
-    notifyListeners();
   }
 
    register(String email, String password, String name) {
@@ -47,6 +58,7 @@ class AuthProvider extends ChangeNotifier {
           authStatus = AuthStatus.authenticated;
           LocalStorage.prefs.setString('token', authResponse.token);
           NavigationService.replaceTo(Flurorouter.dashboardRoute);
+          CafeApi.configureDio();
           notifyListeners();
         }).catchError((e) {
           NotificationsService.showSnackbarError('Hay un error en el registro. Posiblemente ya existe un usuario con ese correo.');
@@ -59,15 +71,22 @@ class AuthProvider extends ChangeNotifier {
     if(token == null) {
       authStatus = AuthStatus.notAuthenticated;
       notifyListeners();
-      return Future.value(false);
+      return false;
     }
 
-    print('IStatus $authStatus');
-    //TODO: request http
-
-    await Future.delayed(const Duration(seconds: 1));
-    authStatus = AuthStatus.authenticated;
-    notifyListeners();
-    return Future.value(true);
+    try {
+     final response = await CafeApi.httpGet('/auth');
+      final authResponse = AuthResponse.fromMap(response);
+      user = authResponse.usuario;
+      LocalStorage.prefs.setString('token', authResponse.token);
+      authStatus = AuthStatus.authenticated;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      NotificationsService.showSnackbarError('Token no válido');
+      authStatus = AuthStatus.notAuthenticated;
+      notifyListeners();
+      return false;
+    }
   }
 }
