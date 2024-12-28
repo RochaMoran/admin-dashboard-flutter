@@ -32,6 +32,7 @@ class LoginView extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      onFieldSubmitted: (_) => onFormSubmit(loginFormProvider, authProvider),
                       validator: (value) {
                         if(EmailValidator.validate(value!)) return null;
                         
@@ -49,6 +50,7 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      onFieldSubmitted: (_) => onFormSubmit(loginFormProvider, authProvider),
                       onChanged: (value) => loginFormProvider.password = value,
                       validator: (value){
                         if(value == null || value.isEmpty) return 'Ingrese su contraseña';
@@ -67,13 +69,7 @@ class LoginView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     CustomOutlinedButton(
-                        onPressed: () {
-                          final isValid = loginFormProvider.validateForm();
-
-                          if(isValid) {
-                            authProvider.login(loginFormProvider.email, loginFormProvider.password);
-                          }
-                      }, text: "Ingresar"),
+                        onPressed: () => onFormSubmit(loginFormProvider, authProvider), text: "Ingresar"),
                     const SizedBox(height: 20),
                     LinkText(
                         text: 'Nueva Cuenta',
@@ -87,5 +83,13 @@ class LoginView extends StatelessWidget {
           ));
       })
     );
+  }
+
+  void onFormSubmit(LoginFormProvider loginFormProvider, AuthProvider authProvider) {
+    final isValid = loginFormProvider.validateForm();
+
+    if(isValid) {
+      authProvider.login(loginFormProvider.email, loginFormProvider.password);
+    }
   }
 }
