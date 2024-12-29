@@ -34,8 +34,7 @@ class CategoriesProvider extends ChangeNotifier {
       notifyListeners();
       return '';
     } catch (e) {
-      print(e.toString());
-      return e.toString();
+      throw e.toString();
     }
   }
 
@@ -56,8 +55,7 @@ class CategoriesProvider extends ChangeNotifier {
       notifyListeners();
       return '';
     } catch (e) {
-      print(e.toString());
-      return e.toString();
+      throw e.toString();
     }
   }
 
@@ -69,8 +67,7 @@ class CategoriesProvider extends ChangeNotifier {
       notifyListeners();
       return '';
     } catch (e) {
-      print(e.toString());
-      return e.toString();
+      throw e.toString();
     }
   }
 }
