@@ -1,9 +1,17 @@
 import 'package:admin_dashboard/datatables/categories_datasource.dart';
+import 'package:admin_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
 
-class CategoriesView extends StatelessWidget {
+class CategoriesView extends StatefulWidget {
   const CategoriesView({super.key});
+
+  @override
+  State<CategoriesView> createState() => _CategoriesViewState();
+}
+
+class _CategoriesViewState extends State<CategoriesView> {
+  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +27,19 @@ class CategoriesView extends StatelessWidget {
           ),
           child: Theme(
             data: Theme.of(context).copyWith(
-              // Fondo del header de las columnas y paginación
               cardColor: Colors.white,
               // Estilo de los textos en la tabla
               dataTableTheme: DataTableThemeData(
                 headingRowColor:
-                    MaterialStateProperty.resolveWith((states) => Colors.white), // Fondo de las columnas
+                    MaterialStateProperty.all(Colors.white), // Fondo de las columnas
                 headingTextStyle: const TextStyle(
                   color: Colors.black, // Color del texto en columnas
                   fontWeight: FontWeight.bold,
-                )
+                ),
               ),
             ),
             child: PaginatedDataTable(
+              headingRowColor: MaterialStateColor.resolveWith((states) => Colors.white),
               columns: const [
                 DataColumn(label: Text('ID')),
                 DataColumn(label: Text('Categoria')),
@@ -39,6 +47,22 @@ class CategoriesView extends StatelessWidget {
                 DataColumn(label: Text('Acciones')),
               ],
               source: CategoriesDTS(),
+              header: const Text(
+                  'Categorias'
+              ),
+              onRowsPerPageChanged: (value) {
+                setState(() {
+                  _rowsPerPage = value ?? 10;
+                });
+              },
+              rowsPerPage: _rowsPerPage,
+              actions: [
+                CustomIconButton(
+                  onPressed: () {}, 
+                  text: 'Crear',
+                  icon: Icons.add_outlined,
+                )
+              ],
             ),
           ),
         ),
