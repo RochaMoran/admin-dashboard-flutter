@@ -17,22 +17,46 @@ class CafeApi {
       final resp = await _dio.get(path);
 
       return resp.data;
-    } catch (e){
+    } catch (e) {
       print(e);
-      throw('Error en el GET');
+      throw ('Error en el GET');
     }
   }
-  
+
   static Future httpPost(String path, Map<String, dynamic> data) async {
     final formData = FormData.fromMap(data);
-    
+
     try {
       final resp = await _dio.post(path, data: formData);
 
       return resp.data;
-    } catch (e){
+    } catch (e) {
       print(e);
-      throw('Error en el GET');
+      throw ('Error en el GET');
+    }
+  }
+
+  static Future httpPut(String path, Map<String, dynamic> data) async {
+    final formData = FormData.fromMap(data);
+
+    try {
+      final resp = await _dio.put(path, data: formData);
+
+      return resp.data;
+    } catch (e) {
+      print(e);
+      throw ('Error en el GET');
+    }
+  }
+
+  static Future httpDelete(String path) async {
+    try {
+      final resp = await _dio.delete(path, data: {});
+
+      return resp.data;
+    } catch (e) {
+      print(e);
+      throw ('Error en el GET');
     }
   }
 }

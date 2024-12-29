@@ -73,11 +73,11 @@ class _CategoriesViewState extends State<CategoriesView> {
                 CustomIconButton(
                   onPressed: () {
                     showDialog(
-                    context: context,
-                    builder: (_) => const Dialog(
-                      insetPadding: EdgeInsets.zero, // Elimina los márgenes
-                      child:  CategoryModal(),
-                    ),
+                      context: context,
+                      builder: (_) => const Dialog(
+                        insetPadding: EdgeInsets.zero, // Elimina los márgenes
+                        child:  CategoryModal(),
+                      ),
                   );
                   }, 
                   text: 'Crear',

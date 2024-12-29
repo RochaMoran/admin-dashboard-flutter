@@ -38,6 +38,11 @@ class Categoria {
         nombre: json["nombre"],
         usuario: UsuarioCategory.fromJson(json["usuario"]),
     );
+
+  @override
+  String toString() {
+    return 'Categoria(id: $id, nombre: $nombre)';
+  }
 }
 
 class UsuarioCategory {
