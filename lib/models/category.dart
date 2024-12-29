@@ -32,6 +32,12 @@ class Categoria {
         "nombre": nombre,
         "usuario": usuario.toJson(),
     };
+
+    factory Categoria.fromMap(Map<String, dynamic> json) => Categoria(
+        id: json["_id"],
+        nombre: json["nombre"],
+        usuario: UsuarioCategory.fromJson(json["usuario"]),
+    );
 }
 
 class UsuarioCategory {
