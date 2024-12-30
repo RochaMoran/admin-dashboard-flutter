@@ -7,6 +7,7 @@ class UsersProvider extends ChangeNotifier {
   List<User> users = [];
   bool isLoading = true;
   bool ascending = true;
+  int? sortColumnIndex;
 
   UsersProvider() {
     getPaginatedusers();
