@@ -56,6 +56,16 @@ class User {
         "img": img,
     };
 
+    factory User.fromMap(Map<String, dynamic> json) => User(
+        rol: json["rol"],
+        estado: json["estado"],
+        google: json["google"],
+        nombre: json["nombre"],
+        correo: json["correo"],
+        uid: json["uid"],
+        img: json["img"],
+    );
+
   @override
   String toString() {
     return 'User(id: $uid, nombre: $nombre)';

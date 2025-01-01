@@ -28,13 +28,37 @@ class UsersProvider extends ChangeNotifier {
       if (a != null && b != null) {
         final aValue = getField(a);
         final bValue = getField(b);
-        return ascending ? Comparable.compare(aValue, bValue) : Comparable.compare(bValue, aValue);
+        return ascending
+            ? Comparable.compare(aValue, bValue)
+            : Comparable.compare(bValue, aValue);
       } else {
         return 0;
       }
     });
 
     ascending = !ascending;
+    notifyListeners();
+  }
+
+  Future<User?>getUserById(String uid) async {
+    try {
+      final resp = await CafeApi.httpGet('/usuarios/$uid');
+      final user = User.fromMap(resp);
+
+      return user;
+    } catch (e) {
+       return null;
+    }
+  }
+
+  void refreshUser(User newUser) {
+    users = users.map((user) {
+      if (user.uid == newUser.uid) {
+        user = newUser;
+      }
+      return user;
+    }).toList();
+
     notifyListeners();
   }
 }
